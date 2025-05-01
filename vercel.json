@@ -1,5 +1,21 @@
 {
   "version": 2,
-  "builds": [{"src": "api/predict/index.py", "use": "@vercel/python"}],
-  "routes": [{"src": "/predict", "methods": ["POST"], "dest": "api/predict/index.py"}]
+  "builds": [
+    {
+      "src": "api/predict/requirements.txt",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/predict/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "includeFiles": [
+          "model.joblib",
+          "preprocessor.joblib"
+        ],
+        "excludeFiles": "**/*"
+      }
+    }
+  ]
 }
