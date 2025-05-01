@@ -14,7 +14,7 @@
           "model.joblib",
           "preprocessor.joblib"
         ],
-        "excludeFiles": "**/*"
+        "excludeFiles": "{**/*,.next,*.cache,node_modules,public,app}/**"
       }
     }
   ]
