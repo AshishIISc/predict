@@ -1,0 +1,14 @@
+venv_predict/
+# Python
+venv*/
+__pycache__/
+*.py[cod]
+
+# ML models
+*.joblib
+*.pth
+*.bin
+
+# Large data
+*.csv
+*.npy
