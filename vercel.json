@@ -1,5 +1,25 @@
 {
   "version": 2,
-  "builds": [{"src": "api/predict/index.py", "use": "@vercel/python"}],
-  "routes": [{"src": "/predict", "methods": ["POST"], "dest": "api/predict/index.py"}]
+  "builds": [
+    {
+      "src": "api/predict/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "includeFiles": ["model.joblib", "preprocessor.joblib"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/predict",
+      "methods": ["POST"],
+      "dest": "api/predict/index.py",
+      "headers": { "Content-Type": "application/json" }
+    },
+    {
+      "src": "/",
+      "dest": "api/predict/index.py"
+    }
+  ]
 }
