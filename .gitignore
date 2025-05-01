@@ -20,6 +20,7 @@ __pycache__/
 *.hdf5
 *.npy
 *.npz
+*.dylib
 
 # Large data
 *.csv
