@@ -5,12 +5,37 @@ import numpy as np
 import torch
 from transformers import DistilBertTokenizer, DistilBertModel
 from pydantic import BaseModel
+from pathlib import Path
 
 app = FastAPI()
 
+
 # Load artifacts
-xgb = joblib.load("model.joblib")
-preprocessor = joblib.load("preprocessor.joblib")
+def load_required_file(filename):
+    """Universal file loader for both local and Vercel environments"""
+    possible_locations = [
+        # Vercel production paths
+        Path("/var/task") / filename,
+        Path(__file__).parent.parent / filename,  # api/predict/../../file.joblib
+
+        # Local development paths
+        Path(__file__).parent.parent.parent / filename,  # project_root/file.joblib
+        Path(filename)  # Direct path as fallback
+    ]
+
+    for path in possible_locations:
+        if path.exists():
+            print(f"Found {filename} at: {path}")  # Debug logging
+            return path
+
+    raise FileNotFoundError(
+        f"{filename} not found in:\n" + "\n".join(str(p) for p in possible_locations))
+
+
+model_path = load_required_file("model.joblib")
+preprocessor_path = load_required_file("preprocessor.joblib")
+xgb = joblib.load(model_path)
+preprocessor = joblib.load(preprocessor_path)
 # tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
 # model = DistilBertModel.from_pretrained("distilbert-base-uncased")
 tokenizer = None
