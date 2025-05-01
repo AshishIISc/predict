@@ -9,8 +9,8 @@
       "src": "api/predict/index.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "50mb",
-        "includeFiles": ["model.joblib", "preprocessor.joblib"]
+        "maxLambdaSize": "250mb",
+        "includeFiles": ["model_quantized.joblib", "preprocessor.joblib"]
       }
     }
   ],
@@ -18,11 +18,6 @@
     {
       "src": "/predict",
       "methods": ["POST"],
-      "dest": "api/predict/index.py",
-      "headers": { "Content-Type": "application/json" }
-    },
-    {
-      "src": "/",
       "dest": "api/predict/index.py"
     }
   ]
