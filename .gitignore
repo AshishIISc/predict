@@ -1,14 +1,32 @@
-venv_predict/
-# Python
+# Virtual environments
 venv*/
+.venv/
+ENV/
+
+# Python
 __pycache__/
 *.py[cod]
+*.pyd
+*.pyo
+*.so
 
-# ML models
+# ML models/data
 *.joblib
+*.pkl
 *.pth
+*.pt
 *.bin
+*.h5
+*.hdf5
+*.npy
+*.npz
 
 # Large data
 *.csv
-*.npy
+*.parquet
+*.feather
+
+# IDE
+.idea/
+.vscode/
+*.swp
