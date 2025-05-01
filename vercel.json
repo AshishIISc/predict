@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/predict/requirements.txt",
+      "src": "requirements.txt",
       "use": "@vercel/python"
     },
     {
