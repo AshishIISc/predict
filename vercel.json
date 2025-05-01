@@ -9,11 +9,12 @@
       "src": "api/predict/index.py",
       "use": "@vercel/python",
       "config": {
+        "maxLambdaSize": "50mb",
         "includeFiles": [
-          "../../model.joblib",
-          "../../preprocessor.joblib"
+          "model.joblib",
+          "preprocessor.joblib"
         ],
-        "maxLambdaSize": "50mb"
+        "excludeFiles": "**/*"
       }
     }
   ]
