@@ -11,8 +11,17 @@ app = FastAPI()
 # Load artifacts
 xgb = joblib.load("model.joblib")
 preprocessor = joblib.load("preprocessor.joblib")
-tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-model = DistilBertModel.from_pretrained("distilbert-base-uncased")
+# tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+# model = DistilBertModel.from_pretrained("distilbert-base-uncased")
+tokenizer = None
+model = None
+
+
+def load_model():
+    from transformers import DistilBertTokenizer, DistilBertModel
+    tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+    model = DistilBertModel.from_pretrained("distilbert-base-uncased")
+    return tokenizer, model
 
 
 class Problem(BaseModel):
@@ -39,6 +48,9 @@ async def root():
 
 @app.post("/predict")
 async def predict(problem: Problem):
+    global tokenizer, model
+    if tokenizer is None:
+        tokenizer, model = load_model()
     # Text embeddings
     text = problem.problem_title + " " + problem.problem_description
     inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=128)

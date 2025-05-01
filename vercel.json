@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/predict/requirements.txt",
+      "use": "@vercel/python"
+    },
+    {
       "src": "api/predict/index.py",
       "use": "@vercel/python",
       "config": {
