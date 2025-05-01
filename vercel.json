@@ -9,8 +9,11 @@
       "src": "api/predict/index.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "250mb",
-        "includeFiles": ["model_quantized.joblib", "preprocessor.joblib"]
+        "maxLambdaSize": "50mb",
+        "includeFiles": [
+          "model.joblib",
+          "preprocessor.joblib"
+        ]
       }
     }
   ],
