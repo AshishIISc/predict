@@ -1,16 +1,28 @@
 {
   "version": 2,
-  "builds": [{
-    "src": "api/predict/index.py",
-    "use": "@vercel/python",
-    "config": {
-      "includeFiles": ["api/predict/model.onnx", "api/predict/preprocessor_params.npz"],
-      "maxLambdaSize": "200mb"
+  "builds": [
+    {
+      "src": "api/predict/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "includeFiles": [
+          "api/predict/model.onnx",
+          "api/predict/preprocessor_params.npz"
+        ],
+        "installCommand": "pip install -r api/predict/requirements.txt --target ."
+      }
     }
-  }],
-  "routes": [{
-    "src": "/api/predict",
-    "methods": ["POST"],
-    "dest": "api/predict/index.py"
-  }]
+  ],
+  "routes": [
+    {
+      "src": "/api/predict",
+      "methods": ["POST"],
+      "dest": "api/predict/index.py"
+    },
+    {
+      "src": "/",
+      "dest": "api/predict/index.py"
+    }
+  ]
 }
