@@ -3,7 +3,8 @@ import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
 import onnxruntime as ort
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
+import requests
 
 app = FastAPI()
 
@@ -19,8 +20,8 @@ def load_models():
     if xgb_session is None:
         xgb_session = ort.InferenceSession(os.path.join(os.path.dirname(__file__), "model.onnx"))
 
-    if text_model is None:
-        text_model = SentenceTransformer('all-MiniLM-L6-v2')
+    # if text_model is None:
+        # text_model = SentenceTransformer('all-MiniLM-L6-v2')
 
     if preprocessor_params is None:
         preprocessor_params = np.load(
@@ -32,6 +33,15 @@ def load_models():
     output_details = xgb_session.get_outputs()
     print("Model outputs:", [output.name for output in output_details])
     print("Output shapes:", [xgb_session.get_outputs()[0].shape])
+
+
+API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+headers = {"Authorization": f"Bearer {os.getenv('HF_API_TOKEN')}"}
+
+
+def get_embeddings(texts):
+    response = requests.post(API_URL, headers=headers, json={"inputs": texts})
+    return response.json()
 
 
 class Problem(BaseModel):
@@ -62,7 +72,8 @@ async def predict(problem: Problem):
 
     # 1. Text embeddings (384D)
     text = problem.problem_title + " " + problem.problem_description
-    text_embedding = text_model.encode([text])[0][:384]  # Ensure 384 dimensions
+    # text_embedding = text_model.encode([text])[0][:384]  # Ensure 384 dimensions
+    text_embedding = get_embeddings([text])[0][:384]
 
     # 2. Numeric features (4)
     numeric_data = (np.array([

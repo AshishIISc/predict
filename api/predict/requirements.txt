@@ -13,4 +13,4 @@ fastapi==0.115.12
 #numpy==1.26.0                      # 8MB
 #fastapi==0.115.12                  # 5MB
 #pydantic==2.11.4                   # 3MB
-tokenizers==0.21.1
+#tokenizers==0.21.1
