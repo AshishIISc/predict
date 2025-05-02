@@ -44,7 +44,7 @@
       resultDiv.innerHTML = 'Processing...';
 
       try {
-        const response = await fetch("/.netlify/functions/predict", {
+        const response = await fetch("/.netlify/functions/index", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
