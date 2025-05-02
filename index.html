@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>ML Problem Classifier</h1>
+  <button onclick="predict()">Test API</button>
+  <script>
+    async function predict() {
+      const response = await fetch("/.netlify/functions/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          problem_title: "Server crashed",
+          problem_description: "Users cannot login"
+        })
+      });
+      const data = await response.json();
+      console.log(data);
+    }
+  </script>
+</body>
+</html>
