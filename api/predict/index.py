@@ -27,8 +27,7 @@ def load_models():
 
     # output details
     output_details = xgb_session.get_outputs()
-    print("Model outputs:", [output.name for output in output_details])
-    print("Output shapes:", [xgb_session.get_outputs()[0].shape])
+    print("Model outputs:", output_details)
 
 
 API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
@@ -102,6 +101,8 @@ async def predict(problem: Problem):
         pred_score = float(outputs[0])
 
     print("outputs", outputs)
+    prediction = {"prediction": "hair_on_fire" if pred_score > 0.5 else "vitamin"}
+    print("prediction", prediction)
 
-    return {"prediction": "hair_on_fire" if pred_score > 0.5 else "vitamin"}
+    return prediction
 
