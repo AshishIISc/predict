@@ -4,12 +4,8 @@
     "src": "api/predict/index.py",
     "use": "@vercel/python",
     "config": {
-      "maxLambdaSize": "15gb",
-      "includeFiles": [
-        "api/predict/model.joblib",
-        "api/predict/preprocessor.joblib"
-      ],
-      "installCommand": "pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt"
+      "includeFiles": ["api/predict/model.onnx", "api/predict/preprocessor.npz"],
+      "maxLambdaSize": "400mb"
     }
   }],
   "routes": [{
