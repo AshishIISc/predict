@@ -21,7 +21,6 @@ __pycache__/
 *.dylib
 
 # Large data
-*.csv
 *.parquet
 *.feather
 
