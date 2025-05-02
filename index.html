@@ -1,20 +1,85 @@
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Knowledge Worker Problem Classifier</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+    .error {
+      color: #d9534f;
+    }
+  </style>
+</head>
 <body>
-  <h1>ML Problem Classifier</h1>
+  <h1>KNOWLEDGE WORKER PROBLEM CLASSIFIER</h1>
   <button onclick="predict()">Test API</button>
+  <div id="result"></div>
+
   <script>
     async function predict() {
-      const response = await fetch("/.netlify/functions/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          problem_title: "Server crashed",
-          problem_description: "Users cannot login"
-        })
-      });
-      const data = await response.json();
-      console.log(data);
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = 'Processing...';
+
+      try {
+        const response = await fetch("/.netlify/functions/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            "worker_role": "Content Moderator",
+            "worker_domain": "Platform Integrity",
+            "problem_title": "Fake news articles being shared widely",
+            "problem_description": "We have observed a sharp rise in the circulation of misinformation regarding public health policies on our platform. If unaddressed, this could damage user trust.",
+            "type_of_issue": "misinformation",
+            "impacted_users_estimate": 500000,
+            "public_reputation_risk": 1,
+            "revenue_impact_estimate": 10000,
+            "time_to_fix_estimate_hours": 48
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        resultDiv.innerHTML = `
+          <h3>Prediction Result:</h3>
+          <p><strong>Classification:</strong> ${data.prediction || 'N/A'}</p>
+          <p><strong>Confidence:</strong> ${data.confidence || 'N/A'}</p>
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+      } catch (error) {
+        console.error('Error:', error);
+        resultDiv.innerHTML = `
+          <p class="error">Failed to get prediction</p>
+          <p class="error">${error.message}</p>
+          <p>Check the browser console for details.</p>
+        `;
+      }
     }
   </script>
 </body>
