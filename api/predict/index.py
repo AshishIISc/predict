@@ -1,27 +1,27 @@
 import os
-import subprocess
-import sys
-import threading
+# import subprocess
+# import sys
+# import threading
 
 
-def install_package(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", package])
-
-# List of required packages (customize versions as needed)
-REQUIRED_PACKAGES = [
-    "transformers==4.51.3",
-    "torch==2.7.0",
-    "xgboost==2.1.4",
-]
-
-
-threads = []
-for package in REQUIRED_PACKAGES:
-    t = threading.Thread(target=install_package, args=(package,))
-    threads.append(t)
-    t.start()
-for t in threads:
-    t.join()
+# def install_package(package):
+#     subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", package])
+#
+# # List of required packages (customize versions as needed)
+# REQUIRED_PACKAGES = [
+#     "transformers==4.51.3",
+#     "torch==2.7.0",
+#     "xgboost==2.1.4",
+# ]
+#
+#
+# threads = []
+# for package in REQUIRED_PACKAGES:
+#     t = threading.Thread(target=install_package, args=(package,))
+#     threads.append(t)
+#     t.start()
+# for t in threads:
+#     t.join()
 
 
 
@@ -71,6 +71,8 @@ model = None
 
 def load_model():
     from transformers import DistilBertTokenizer, DistilBertModel
+    import torch
+    torch.set_num_threads(1)
     tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
     model = DistilBertModel.from_pretrained("distilbert-base-uncased")
     return tokenizer, model
