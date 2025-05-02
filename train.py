@@ -1,34 +1,3 @@
-import os
-import subprocess
-import sys
-import threading
-
-def install_package(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", package])
-
-# List of required packages (customize versions as needed)
-REQUIRED_PACKAGES = [
-    "fastapi>=0.68.0",
-    "uvicorn>=0.15.0",
-    "scikit-learn>=1.0.0",
-    "transformers>=4.12.0",
-    "torch>=1.9.0",
-    "pandas>=1.3.0",
-    "numpy>=1.21.0",
-    "xgboost>=1.5.0",
-    "joblib>=1.0.0",
-]
-
-
-threads = []
-for package in REQUIRED_PACKAGES:
-    t = threading.Thread(target=install_package, args=(package,))
-    threads.append(t)
-    t.start()
-for t in threads:
-    t.join()
-
-
 import pandas as pd
 import numpy as np
 import torch
