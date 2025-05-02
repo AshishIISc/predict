@@ -6,10 +6,12 @@
 
 
 # Core ML packages
-torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu  # CPU-only (smaller)
+#torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu  # CPU-only (smaller)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.3.0 --index-url https://download.pytorch.org/whl/cpu
 transformers==4.40.0  # Latest stable
-xgboost==2.1.4  # Skip extra dependencies
-sentence-transformers==2.6.1  # Optional (lighter than transformers)
+xgboost==2.1.4
+#sentence-transformers==2.6.1  # Optional (lighter than transformers)
 
 # Infrastructure
 fastapi==0.110.0
