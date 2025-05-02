@@ -33,6 +33,7 @@ def load_models():
     print("Model outputs:", [output.name for output in output_details])
     print("Output shapes:", [xgb_session.get_outputs()[0].shape])
 
+
 class Problem(BaseModel):
     worker_role: str  # categorical
     worker_domain: str  # categorical
