@@ -1,6 +1,7 @@
 onnxruntime==1.17.0
-transformers==4.40.0  # Latest stable
+#sentence_transformers==2.6.1  # Latest stable
 joblib==1.3.2
 pandas==2.2.3
 numpy==1.26.0
 pydantic==2.11.4
+protobuf==3.20.2
