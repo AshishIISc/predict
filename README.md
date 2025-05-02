@@ -15,18 +15,41 @@ python -m venv venv_predict
 source venv_predict/bin/activate
 ```
 
-### 2. Install requirements
+### 2. Install requirements  (for training purpose, and this would be root directory requirements.txt)
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Train the model
+### 1. create and Save preprocessor components separately for ONNX
 ```bash
-python train.py
+python train_with_onxx.py
 ```
 This will:
 
-Process the training data (knowledge_worker_problems_train.csv)
+Process the training data (knowledge_worker_problems_train.csv) and will train the model and save it as model.joblib and alos make preprocessor_params.npz
+
+### 2. convert the model.joblib to model.onnx (doing this so that while inference we will directly use the onnx model instead of loading xgboost which will take lot of memory)
+```bash
+python convert_to_onnx.py
+```
+this file will get created in root directory, copy this model.onnx to api/predict/
+```bash
+cp model.onnx api/predict/model.onnx
+```
+also copy preprocessor_params.npz from root to api/predict/
+```bash
+cp preprocessor_params.npz api/predict/preprocessor_params.npz
+```
+### 3. create a requirement file in api/predict/ folder   (api/predict/requirements.txt)
+```plaintext
+onnxruntime==1.17.0
+requests==2.32.3
+joblib==1.3.2
+numpy==1.26.0
+pydantic==2.11.4
+fastapi==0.115.12
+```
 
 ## Run the api server
 ```bash
@@ -83,7 +106,7 @@ predict/
 └── preprocessor.joblib     (generated after training)
 ```
 
-## Requirements.txt
+## Requirements.txt (these are for training purpose, this file should be in root directory)
 ```plaintext
 fastapi==0.109.2
 uvicorn==0.27.0
