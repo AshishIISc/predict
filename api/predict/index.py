@@ -32,7 +32,7 @@ def load_models():
 
 
 API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
-headers = {"Authorization": f"Bearer {os.getenv('HF_API_TOKEN')}"}
+headers = {"Authorization": "Bearer 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"}
 
 
 def get_embeddings(texts):
