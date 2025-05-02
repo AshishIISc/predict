@@ -3,7 +3,6 @@ import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel
 import onnxruntime as ort
-# from sentence_transformers import SentenceTransformer
 import requests
 
 app = FastAPI()
@@ -19,9 +18,6 @@ def load_models():
 
     if xgb_session is None:
         xgb_session = ort.InferenceSession(os.path.join(os.path.dirname(__file__), "model.onnx"))
-
-    # if text_model is None:
-        # text_model = SentenceTransformer('all-MiniLM-L6-v2')
 
     if preprocessor_params is None:
         preprocessor_params = np.load(
@@ -72,7 +68,6 @@ async def predict(problem: Problem):
 
     # 1. Text embeddings (384D)
     text = problem.problem_title + " " + problem.problem_description
-    # text_embedding = text_model.encode([text])[0][:384]  # Ensure 384 dimensions
     text_embedding = get_embeddings([text])[0][:384]
 
     # 2. Numeric features (4)
