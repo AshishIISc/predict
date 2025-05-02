@@ -62,7 +62,7 @@ async def root():
     }
 
 
-@app.post("/predict")
+@app.post("/api/predict")
 async def predict(problem: Problem):
     load_models()
 
