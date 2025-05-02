@@ -1,4 +1,3 @@
 [build]
-command = "echo 'No build needed'"
-functions = "api"  # Path to your functions directory
-publish = "."       # Serve frontend files from root
+command = "pip install -r api/predict/requirements.txt -t python"
+functions = "api/predict"
