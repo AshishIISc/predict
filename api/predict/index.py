@@ -64,10 +64,12 @@ def load_required_file(filename):
         f"{filename} not found in:\n" + "\n".join(str(p) for p in possible_locations))
 
 
-model_path = load_required_file("model.joblib")
-preprocessor_path = load_required_file("preprocessor.joblib")
-xgb = joblib.load(model_path)
-preprocessor = joblib.load(preprocessor_path)
+# model_path = load_required_file("model.joblib")
+# preprocessor_path = load_required_file("preprocessor.joblib")
+xgb = joblib.load(os.path.dirname(__file__) + "/model.joblib")
+preprocessor = joblib.load(os.path.dirname(__file__) + "/preprocessor.joblib")
+# xgb = joblib.load(model_path)
+# preprocessor = joblib.load(preprocessor_path)
 # tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
 # model = DistilBertModel.from_pretrained("distilbert-base-uncased")
 tokenizer = None
