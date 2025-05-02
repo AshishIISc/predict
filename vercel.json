@@ -5,7 +5,7 @@
     "use": "@vercel/python",
     "config": {
       "includeFiles": ["api/predict/model.onnx", "api/predict/preprocessor.npz"],
-      "maxLambdaSize": "400mb"
+      "maxLambdaSize": "200mb"
     }
   }],
   "routes": [{
