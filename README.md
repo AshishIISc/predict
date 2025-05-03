@@ -1,6 +1,6 @@
 # Worker Problem Classifier API
 
-A FastAPI-based service that classifies worker problems using **DistilBert** and **XGBoost**.
+A FastAPI-based service that classifies worker problems using **sentence-transformer (all-MiniLM-L6-v2)** and **XGBoost**.
 
 ## Prerequisites
 
