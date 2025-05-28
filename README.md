@@ -1,4 +1,4 @@
-# Worker Problem Classifier API
+# Worker Problem Classifier API 
 
 A FastAPI-based service that classifies worker problems using **sentence-transformer (all-MiniLM-L6-v2)** and **XGBoost**.
 
